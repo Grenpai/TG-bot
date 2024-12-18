@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistic</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bot Statistic</h1>
+    <table>
+        <thead>
+            <tr>
+                <th onclick="sortTable('id')">ID</th>
+                <th onclick="sortTable('user_id')">User ID</th>
+                <th onclick="sortTable('username')">Username</th>
+                <th onclick="sortTable('command')">Command</th>
+                <th onclick="sortTable('timestamp')">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.user_id }}</td>
+                <td>{{ log.username }}</td>
+                <td>{{ log.command }}</td>
+                <td>{{ log.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function sortTable(column) {
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentSort = urlParams.get('sort_by');
+            var currentOrder = urlParams.get('order') || 'ASC';
+            var order = 'ASC';
+            if (currentSort === column) {
+                order = currentOrder === 'ASC' ? 'DESC' : 'ASC';
+            }
+            window.location.search = '?sort_by=' + column + '&order=' + order;
+        }
+    </script>
+</body>
+</html>
